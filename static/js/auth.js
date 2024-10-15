@@ -1,30 +1,44 @@
-import { validateEmail, validatePhoneNumber } from '../functions/ioValidation.js';
+import { validateEmail, validatePhoneNumber,validatePassword } from '../functions/ioValidation.js';
 $(document).ready(function(){
     let errorField;
     let formData;
     let mainCallid;
+    let passkey;
+    // let submit;
     $('#main-callid, #callid, #new-call-id').on('input',function(){
         mainCallid=$(this).val();
         if(validateEmail(mainCallid)){
-            FormData={
+            formData={
                 inputType:'email',
                 input:mainCallid
             }
+            $('#valideMail').val(true);
+            $(this).removeClass('errorField');
         }
         else if(validatePhoneNumber(mainCallid)){
-            FormData={
+            formData={
                 inputType:'phone',
                 input:mainCallid
             }
+            $(this).removeClass('errorField');
+            $('#valideMail').val(true);
         }
         else{
-            errorField=$(this);
+            $(this).addClass('errorField');
+            $('#valideMail').val(false);
         }
-        errorField.css({
-            'background-color': 'blue',
-            'border': '2px',
-            'font-weight': 'bold'
-        });
+    });
+    $('#password, #new-password, #re-password').on('input',function(){
+        passkey=$(this).val();
+        if(validatePassword(passkey)){
+            console.log("correct");
+            $(this).removeClass('errorField');
+            $('#validePass').val(true);
+        }
+        else{
+            $(this).addClass('errorField');
+            $('#validePass').val(false);
+        }   
     });
 
     $('#auth').on('click',function(){
@@ -32,7 +46,7 @@ $(document).ready(function(){
         console.log("ddddddd3")
             // $.ajax({
             //     url:'/',
-            //     data:FormData,
+            //     data:formData,
             //     method:'POST',
             //     success:function(){
             //     },
@@ -41,8 +55,8 @@ $(document).ready(function(){
 
 
             $('#intro-form').removeClass('active');
-            $('#signin').addClass('active')
-            $('#callid').val(mainCallid)
+            $('#signin').addClass('active');
+            $('#callid').val(mainCallid);
         }
     })
 });

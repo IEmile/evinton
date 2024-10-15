@@ -1,0 +1,34 @@
+
+/* css style in the common inputs located in the index file where signup and signin are to be intertained in one  */
+/* bando moving after mainform which will display one and hide the other */
+
+.btn-rd-mn{
+    background-color: red;
+    color: white;
+}
+/* .authication-form{
+    display: none;
+} */
+.errorField{
+   background-color: blue;
+   border: 2px;
+   font-weight: bold;
+}
+ #intro-form{
+    display: none;
+ }
+ #intro-form.active{
+    display: block;
+ }
+ #signin{
+    display: none;
+ }
+ #signin.active{
+    display: block;
+ }
+ #signup{
+    display: none;
+ }
+ #sigup.active{
+    display: block;
+ }
