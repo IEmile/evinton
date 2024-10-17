@@ -1,62 +1,66 @@
-import { validateEmail, validatePhoneNumber,validatePassword } from '../functions/ioValidation.js';
-$(document).ready(function(){
-    let errorField;
+import { validateEmail, validatePhoneNumber, validatePassword } from '../functions/ioValidation.js';
+
+$(document).ready(function() {
     let formData;
     let mainCallid;
     let passkey;
-    // let submit;
-    $('#main-callid, #callid, #new-call-id').on('input',function(){
-        mainCallid=$(this).val();
-        if(validateEmail(mainCallid)){
-            formData={
-                inputType:'email',
-                input:mainCallid
-            }
-            $('#valideMail').val(true);
-            $(this).removeClass('errorField');
+
+    function updateValidationStatus(element, isValid, validField) {
+        if (isValid) {
+            $(element).removeClass('errorField');
+            $(validField).val(true);
+        } else {
+            $(element).addClass('errorField');
+            $(validField).val(false);
         }
-        else if(validatePhoneNumber(mainCallid)){
-            formData={
-                inputType:'phone',
-                input:mainCallid
-            }
-            $(this).removeClass('errorField');
-            $('#valideMail').val(true);
-        }
-        else{
-            $(this).addClass('errorField');
-            $('#valideMail').val(false);
+    }
+
+    $('#main-callid, #callid, #new-call-id').on('input', function() {
+        mainCallid = $(this).val();
+        if (validateEmail(mainCallid)) {
+            formData = { inputType: 'email', input: mainCallid };
+            updateValidationStatus(this, true, '#valideMail');
+        } else if (validatePhoneNumber(mainCallid)) {
+            formData = { inputType: 'phone', input: mainCallid };
+            updateValidationStatus(this, true, '#valideMail');
+        } else {
+            updateValidationStatus(this, false, '#valideMail');
         }
     });
-    $('#password, #new-password, #re-password').on('input',function(){
-        passkey=$(this).val();
-        if(validatePassword(passkey)){
-            console.log("correct");
-            $(this).removeClass('errorField');
-            $('#validePass').val(true);
-        }
-        else{
-            $(this).addClass('errorField');
-            $('#validePass').val(false);
-        }   
+
+    $('#password, #new-password, #re-password').on('input', function() {
+        passkey = $(this).val();
+        updateValidationStatus(this, validatePassword(passkey), '#validePass');
     });
 
-    $('#auth').on('click',function(){
-        if(validateEmail(mainCallid) || validatePhoneNumber(mainCallid)){
-        console.log("ddddddd3")
-            // $.ajax({
-            //     url:'/',
-            //     data:formData,
-            //     method:'POST',
-            //     success:function(){
-            //     },
-            //     error:function(){}
-            // })
-
-
-            $('#intro-form').removeClass('active');
-            $('#signin').addClass('active');
-            $('#callid').val(mainCallid);
+    $('#auth').on('click', function() {
+        if ($('#valideMail').val() === 'true') {
+            $.ajax({
+                url: '/auth',
+                data: formData,
+                method: 'POST',
+                success: function(response) {
+                    console.log("Authentication successful");
+                    console.log(response);
+                    if(response){
+                        $('#intro-form').removeClass('active');
+                        $('#signin').addClass('active');
+                        $('#callid').val(mainCallid);
+                    }
+                    else{
+                        $('#intro-form').removeClass('active');
+                        $('#signup').addClass('active');
+                        $('#new-callid').val(mainCallid);
+                    }
+                    // Handle success
+                },
+                error: function(error) {
+                    console.error("Error during authentication", error);
+                    // Handle error
+                }
+            });
+        } else {
+            console.log("Validation failed");
         }
-    })
+    });
 });

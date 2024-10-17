@@ -22,13 +22,17 @@
         <div id="signin">
             <input type="text" name="callid" id="callid">
             <input type="text" name="password" id="password">
-            <button id="signin" class="btn-rd-mn">Continue</button>
+            <input type="hidden" name="valideMail" id="valideMail">
+            <input type="hidden" name="validePass" id="validePass">
+            <button id="signin-btn" class="btn-rd-mn">Continue</button>
         </div>
         <div id="signup">
-            <input type="text" name="newCallid" id="new-call-id">
+            <input type="text" name="newCallid" id="new-callid">
             <input type="text" name="newPassword" id="new-password">
             <input type="text" name="rePassword" id="re-password">
-            <button id="signup" class="btn-rd-mn">Continue</button>
+            <input type="hidden" name="valideMail" id="valideMail">
+            <input type="hidden" name="validePass" id="validePass">
+            <button id="signup-btn" class="btn-rd-mn">Continue</button>
         </div>
     </div>
     <!-- </form> -->
@@ -39,7 +43,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="js\auth.js"></script>
     <!-- <script type="module" src="path/to/auth.js"></script> -->
-    <!-- <script src="js/signin.js"></script> -->
-    <!-- <script src="js/signup.js"></script> -->
+    <script type="module" src="js/signin.js"></script>
+    <script src="js/signup.js"></script>
 </body>
 </html>

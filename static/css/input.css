@@ -29,6 +29,6 @@
  #signup{
     display: none;
  }
- #sigup.active{
+ #signup.active{
     display: block;
  }

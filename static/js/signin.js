@@ -11,18 +11,17 @@ $(document).ready(function(){
             };
             console.log(formData)
 
-
-            // $.ajax({
-            //     url: '/your-server-endpoint',
-            //     method: 'POST',
-            //     data: formData,
-            //     success: function(response) {
-            //         console.log('Server response:', response);
-            //     },
-            //     error: function(error) {
-            //         console.log('Error:', error);
-            //     }
-            // });
+            $.ajax({
+                url: '/signin',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    console.log('Server response:', response);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
         } else {
             alert('Invalid data or passwords do not match');
         }

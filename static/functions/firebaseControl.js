@@ -1,6 +1,7 @@
 import{db}from './firebase.js';
-import { doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, collection, query, where, orderBy } from 'firebase/firestore';
+import { doc,addDoc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, collection, query, where, orderBy } from 'firebase/firestore';
 
+// check if information exists in db 
 export async function checkIfEmailExists(collectionName, email) {
     try {
       // Create a query to search for the email
@@ -20,3 +21,24 @@ export async function checkIfEmailExists(collectionName, email) {
       throw new Error("Could not verify email existence");
     }
   }
+
+// Function to set or add data (create or overwrite a document) using docid
+export async function setData(collectionName, docId, data) {
+  try {
+    await setDoc(doc(db, collectionName, docId), data);
+    console.log(`Document written with ID: ${docId}`);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+}
+
+// Function to add a new document with a generated ID
+export async function addData(collectionName, data) {
+  try {
+    // Add a new document with a generated ID
+    const docRef = await addDoc(collection(db, collectionName), data);
+    console.log(`Document written with ID: ${docRef.id}`);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+}
